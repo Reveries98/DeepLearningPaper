@@ -69,3 +69,16 @@ thus the pre-training can utilize multi-modal contents.
 % Common to these approaches is the conversion of queries and 
 % codes into high-dimensional embedding vectors.
 
+\subsection{Generative Adversarial Nets}
+Adversarial training is an effective approach to enhance the robustness of a deep learning model(\citealp{bai2021recent}). And generative models are able to learn the probability distribution that generated the training examples. Generative adversarial networks(GANs) then performs well in generating more examples from the estimated probability distribution(\citealp{goodfellow2020generative}) so that it becomes a hot research topic recently.
+
+Generally, GANs(\citealp{10.5555/2969033.2969125}) is similar to a minimax two-player game: one is a generative model $G$ that captures the data distribution, and the other player is a discriminative model $D$ that estimates the probability that an example came from the training data rather than $G$, i.e. to determine whether an example is from the model distribution or the data distribution. Both $G$ and $D$ are defined by multilayer perceptrons and are trained simultaneously. Competitions among these two players drives both to improve their performance respectively. And the value function in this game can be referred to as
+\begin{equation}
+\begin{split}
+\mathop{min}\limits_{G}\mathop{max}\limits_{D}V(D,G)&=E_{x\sim p_{data}(x)}[log D(x)]\\ &+E_{z\sim p_{z}(z)}[log (1-D(G(z)))]
+\end{split}
+\end{equation}
+where $p_{data}(x)$ is the distribution over data $x$, $z$ is the input noise, $G(z)$ represents a mapping from $z$ to data space, and $D(x)$ refers to the probability that $x$ came from the data rather than $G$.
+
+In practice, the GANs must be implemented using an iterative, numerical approach, i.e. alternating between $k$ steps of optimizing $D$ and one step of optimizing $G$. And finally the training or the game terminates at a saddle point that is a minimum with respect to one player's strategy and a maximum with respect to the other player's strategy.
+
