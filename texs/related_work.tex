@@ -7,16 +7,16 @@ Our work is related to the following two fields:
 \subsection{Code Search}
 Recent years’ works adopt deep learning models in code search, 
 of which the idea is to embed natural language queries and program code into vectors 
-and then calculate their similarity score. Models in code search can be roughly 
+and then calculate their similarity score. Models in code search based on deep learning can be roughly 
 divided into the following aspects:
 
 (1) RNN based models. Gu et al. (\citealp{DeepCS})
 build two networks to embed queries and program code into vectors, respectively. 
 Cosine similarity is used to compute the similarity between the vectors. 
 
-(2) CNN based models. Followed by (\citealp{DeepCS}), Li et al. (\citealp{CQIL}) construct “name-query” 
-and “body-query” latex match matrix with fastText and use 
-CNN (convolutional neural network) to extract features.  
+(2) CNNs based models. Followed by (\citealp{DeepCS}), Li et al. (\citealp{CQIL}) construct “name-query” 
+and “body-query” latex match matrix with fastText (\citealp{fastText}) and use 
+CNNs to extract features.  
 
 (3) PLMs. Feng et al. (\citealp{CodeBERT}) followed the idea of BERT (\citealp{BERT}) 
 and proposed a pre-train model training on CSN (\citealp{CodeSearchNet}) 
@@ -72,7 +72,7 @@ thus the pre-training can utilize multi-modal contents.
 \subsection{Generative Adversarial Nets}
 Adversarial training is an effective approach to enhance the robustness of a deep learning model(\citealp{bai2021recent}). And generative models are able to learn the probability distribution that generated the training examples. Generative adversarial networks(GANs) then performs well in generating more examples from the estimated probability distribution(\citealp{goodfellow2020generative}) so that it becomes a hot research topic recently.
 
-Generally, GANs(\citealp{10.5555/2969033.2969125}) is similar to a minimax two-player game: one is a generative model $G$ that captures the data distribution, and the other player is a discriminative model $D$ that estimates the probability that an example came from the training data rather than $G$, i.e. to determine whether an example is from the model distribution or the data distribution. Both $G$ and $D$ are defined by multilayer perceptrons and are trained simultaneously. Competitions among these two players drives both to improve their performance respectively. And the value function in this game can be referred to as
+Generally, GAN(\citealp{10.5555/2969033.2969125}) is similar to a minimax two-player game: one is a generative model $G$ that captures the data distribution, and the other player is a discriminative model $D$ that estimates the probability that an example came from the training data rather than $G$, i.e. to determine whether an example is from the model distribution or the data distribution. Both $G$ and $D$ are defined by multilayer perceptrons and are trained simultaneously. Competitions among these two players drives both to improve their performance respectively. And the value function in this game can be referred to as
 \begin{equation}
 \begin{split}
 \mathop{min}\limits_{G}\mathop{max}\limits_{D}V(D,G)&=E_{x\sim p_{data}(x)}[log D(x)]\\ &+E_{z\sim p_{z}(z)}[log (1-D(G(z)))]
