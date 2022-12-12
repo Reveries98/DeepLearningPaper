@@ -1,5 +1,72 @@
 %!TEX root = ../main_article.tex
 
-\section{Method}
+\section{Methodology}
 
+We propose two strategies to improve code search performance based on the assumption that identity information will confuse the model when fine-tuning multiple language data. Instead of changing the structure and pre-training the whole code search model, we focus on transforming the model output embedding vectors during the fine-tuning process, which is less computing complexity. 
+
+The first strategy is leveraging GAN to eliminate identity information. The second strategy is to distance the KL divergence (CITE) between identity embedding and semantic embedding.
+
+\noindent\textbf{Identity and semantic information.} The identity information we consider as the syntax signal of different program languages, which distinguishes them from each other. We consider the identity information as the signal that the model can classify each program language data correctly. The semantic information is the intention of a code snippet, which describes the function of the code.
+
+\subsection{Strategy 1}
+
+In this section, we introduce a GAN-based enhance network, 
+which contains a generator and a discriminator. 
+We start by introducing the basic idea and the model structure. 
+Then we describe the training procedure in this paper in detail. 
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1\linewidth]{imgs/structure.png}
+	% \vspace{-15pt}
+	\caption{Structure of the search enhancement framework.}
+	% \vspace{-12pt}
+	\label{fig:structure}
+\end{figure}
+
+The GAN structure is used widely in image generation. 
+Generally, it contains two sub-network: a generator, 
+which aims at generating data of a specific distribution, and a discriminator, 
+which intends to determine the generated data if it is in the ideal distribution. 
+In this paper, we introduce an MLP (Multilayer Perceptron) as the generator, 
+of which the purpose is to generate high-dimensional vectors free of identity information. 
+We also use another MLP as the discriminator. 
+The object of the discriminator is to determine whether the vector generator produced 
+contains identity information. The structure of the network can be seen in Fig~\ref{fig:structure}.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1\linewidth]{imgs/gan_torch.png}
+	% \vspace{-15pt}
+	\caption{Pytorch style pseudocode of strategy 1}
+	% \vspace{-12pt}
+	\label{fig:gan}
+\end{figure}
+
+\subsection{Strategy 2}
+Although GAN has a strong ability of learning and manipulating data distribution, 
+it is hard to be trained, and can easily suffer from gradient vanishing (CITE). 
+Therefore, we propose an MLP-based network to disentangle identity and semantic 
+information. The overlook of the network can be seen in Fig~\ref{fig:st2}. 
+
+The network takes embedding vectors extracted by CodeBERT as the input. 
+Then, the input vector will be put into MLPs and can obtain 
+two high-dimensional vectors: $V_1$ and $V_2$. 
+We hope that $V_1$ possesses identity information and $V_2$  
+possesses semantic information. Therefore, 
+we use $V_1$ for classification and $V_2$ for code search, 
+in order to extract identity and semantic information, respectively. 
+Then, we maximize KL divergence, which is illustrated in Eq, between $V_1$ and $V_2$. 
+Finally, $V_2$ can be viewed as the sentence embedding 
+of a input code snippet without identity information and can be further 
+used for code search.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.8\linewidth]{imgs/st2.png}
+	% \vspace{-15pt}
+	\caption{Overlook of strategy 2}
+	% \vspace{-12pt}
+	\label{fig:st2}
+\end{figure}
 

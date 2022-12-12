@@ -5,9 +5,20 @@
 Our work is related to the following two fields: 
 
 \subsection{Code Search}
-Recent years’ works adopt deep learning models in code search, 
-of which the idea is to embed natural language queries and program code into vectors 
-and then calculate their similarity score. Models in code search based on deep learning can be roughly 
+
+Recent years’ works adopt deep learning models in code search, of which the idea is to embed natural language queries and program code into vectors and then calculate their similarity score. 
+Fig~\ref{fig:cs_frame} shows the framework of code search: a code encoder, a natural language encoder, and a similarity calculator. The encoder transforms code or queries into high-dimensional vectors, which are considered semantic information. The calculator o computes the similarity between the two vectors. 
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.8\linewidth]{imgs/code_search_framework.png}
+	% \vspace{-15pt}
+	\caption{Structure of the search enhancement framework.}
+	% \vspace{-12pt}
+	\label{fig:cs_frame}
+\end{figure}
+
+Models in code search based on deep learning can be roughly 
 divided into the following aspects:
 
 (1) RNN based models. Gu et al. (\citealp{DeepCS})

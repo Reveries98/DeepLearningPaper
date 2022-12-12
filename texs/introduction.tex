@@ -8,14 +8,14 @@ As deep learning has grown by leaps and bounds in recent years, a number of meth
 
 From the view of PLMs, all of them have well performance in code search, with complex model architecture and advanced training techniques. However, PLMs often treat code search as a downstream task, which means researchers can pre-train a model with hybrid objectives and multiple program language code data, then fine-tune it in a specific program language for code search (\citealp{UniXcoder,CodeBERT,GraphCodeBERT}). Our empirical study shows that there might be a performance decline when fine-tuning with data in multiple languages. Table~\ref{tab:comparison} shows MRR (Mean Reciprocal Rank, \citealp{MRR}) comparisons between single program language fine-tuned models, and multiple program language fine-tuned models. The left first column indicates what program languages have been used in fine-tuning and the rest columns show the search performance toward a specific language according to the first column. Similar to multilingual models (\citealp{multilingualModel,YangYCD21}), code information can be roughly divided into identity information, distinguishing code from another code written in different program languages, and semantic information, which reveals its intention. In code search, code semantic information is only needed, for it is matched with specific queries. The identity information may confound model training and decrease performance when fine-tuning with multiple program language data.
 
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=1\linewidth]{imgs/structure.png}
-	% \vspace{-15pt}
-	\caption{Structure of the search enhancement framework.}
-	% \vspace{-12pt}
-	\label{fig:structure}
-\end{figure}
+% \begin{figure}[htb]
+% 	\centering
+% 	\includegraphics[width=1\linewidth]{imgs/structure.png}
+% 	% \vspace{-15pt}
+% 	\caption{Structure of the search enhancement framework.}
+% 	% \vspace{-12pt}
+% 	\label{fig:structure}
+% \end{figure}
 
 Therefore, we want to reduce the identity information of the embedding vector given by code search pre-trained models. We followed the idea of GAN (Generative Adversarial Network, \citealp{goodfellow2020generative}) and propose a search enhancement framework. Our method consists of two additional networks: a generator, which aims to generate code search embedding vector with less identity information, and a discriminator, of which the purpose is to identify the language feature. We treat the discriminator as a classification problem. When there is less identity information, the discriminator may not classify the data well. Fig~\ref{fig:structure} illustrates our framework architecture.
 In summary, our contributions are:
