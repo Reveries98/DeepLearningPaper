@@ -70,3 +70,29 @@ used for code search.
 	\label{fig:st2}
 \end{figure}
 
+According to the above, learning the disentangle network 
+involves finding parameters $\theta=(W,b)$ that minimize the hybrid loss on the given dataset, 
+and the objective is given as Eq~\ref{eq_st2_4}, 
+where $\alpha_1$, $\alpha_2$, $\alpha_3$ are hyperparameters, 
+and the sum of them is equal to 1. 
+Besides, Eq~\ref{eq_st2_1} represents the code search loss, intends to keep search performance, 
+where $sim$ is  the similarity score and $c_i$ is the $i_{th}$ code and $q_i$  is the $i_{th}$ query. 
+Eq~\ref{eq_st2_2} is the classification loss, the purpose is to extract identity information. 
+Eq~\ref{eq_st2_3} leverages KL divergence to maximize the distribution of the embedding vectors output 
+by the disentangle network.
+\begin{equation}\label{eq_st2_1}
+L_{1} = \frac{1}{n}{\sum_{i = 1}^{n}\left( 1 - sim\left( encoder\left( c_{i} \right),encoder\left( q_{i} \right) \right) \right.}
+\end{equation}
+
+\begin{equation}\label{eq_st2_2}
+L_{2} = \frac{1}{n}{\sum_{i = 1}^{n}{\sum_{j = 1}^{k}{- y_{i,j}log\left( p_{i,j} \right)}}}
+\end{equation}
+
+\begin{equation}\label{eq_st2_3}
+L_{3} = \frac{1}{n}{\sum_{i = 1}^{n}\left( \alpha - KL\left( V_{1,i},V_{2,i} \right) \right)}
+\end{equation}
+
+\begin{equation}\label{eq_st2_4}
+\theta = {\min\limits_{\theta}{\alpha_{1}L_{1} +}}\alpha_{2}L_{2} + \alpha_{3}L_{3}
+\end{equation}
+
