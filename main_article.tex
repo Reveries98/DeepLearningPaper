@@ -15,8 +15,6 @@
 \setlength{\pdfpageheight}{11in} % DO NOT CHANGE THIS
 %
 % These are recommended to typeset algorithms but not required. See the subsubsection on algorithms. Remove them if you don't have algorithms in your paper.
-\usepackage{algorithm}
-\usepackage{algorithmic}
 \usepackage{amsmath}
 \usepackage{hyperref} 
 % \usepackage[backref]{hyperref} 
@@ -26,7 +24,10 @@
 \usepackage{cleveref}
 \usepackage{xcolor}
 \usepackage{multirow}
-
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 % \usepackage{multicolumn}
 % \usepackage{subcaption}
 % \usepackage{float}
@@ -35,6 +36,8 @@
 \usepackage{newfloat}
 \usepackage{appendix}
 \usepackage{listings}
+\usepackage{caption}
+% \usepackage{algorithmicx}
 \DeclareCaptionStyle{ruled}{labelfont=normalfont,labelsep=colon,strut=off} % DO NOT CHANGE THIS
 \lstset{%
     basicstyle={\footnotesize\ttfamily},% footnotesize acceptable for monospace

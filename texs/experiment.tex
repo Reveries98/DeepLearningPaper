@@ -22,7 +22,7 @@ We use the package of Transformers 4.24.0 and Pytorch 1.12.0, based on Python 3.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=1\linewidth]{imgs/discri_loss.png}
+	\includegraphics[width=0.8\linewidth]{imgs/discri_loss.pdf}
 	% \vspace{-15pt}
 	\caption{Loss change of discirminator during training.}
 	% \vspace{-12pt}
@@ -41,7 +41,7 @@ as the loss first decreases and then rises with increasing iterations.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=1\linewidth]{imgs/gen_loss.png}
+	\includegraphics[width=0.8\linewidth]{imgs/gen_loss.pdf}
 	% \vspace{-15pt}
 	\caption{Loss change of generator during training.}
 	% \vspace{-12pt}
@@ -50,7 +50,7 @@ as the loss first decreases and then rises with increasing iterations.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.9\linewidth]{imgs/st2_loss.png}
+	\includegraphics[width=0.8\linewidth]{imgs/st2_loss.pdf}
 	% \vspace{-15pt}
 	\caption{Loss of network 2 during training.}
 	% \vspace{-12pt}
@@ -65,7 +65,7 @@ using MRR, which is shown in Eq~\ref{MRR}, as the index and with the evaluation 
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.9\linewidth]{imgs/st2_eval.png}
+	\includegraphics[width=0.8\linewidth]{imgs/st2_eval.pdf}
 	% \vspace{-15pt}
 	\caption{MRR change in evaluation during training.}
 	% \vspace{-12pt}
@@ -74,7 +74,7 @@ using MRR, which is shown in Eq~\ref{MRR}, as the index and with the evaluation 
 
 \subsection{Analysing Embedding Vectors after Disentangling}
 Intuitively, identity and semantic information can be divided easily after 
-applying the disentangle strategy we proposed. Thus, we first use t-SNE, 
+applying the disentangle strategy we proposed. Thus, we first use t-SNE~\cite{tSNE}, 
 which is a dimensionality reduction method, to 
 reduce high-dimensional vectors to 2 dimensions. 
 Then we visualize the 2-dimensional vectors. 
@@ -91,7 +91,7 @@ two types of the vectors can basically be separated.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.9\linewidth]{imgs/st2_emb.png}
+	\includegraphics[width=0.9\linewidth]{imgs/st2_emb.pdf}
 	% \vspace{-15pt}
 	\caption{Embedding vector comparision of strategy 2 network.}
 	% \vspace{-12pt}
@@ -100,7 +100,7 @@ two types of the vectors can basically be separated.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.9\linewidth]{imgs/gan_emb.png}
+	\includegraphics[width=0.9\linewidth]{imgs/gan_emb.pdf}
 	% \vspace{-15pt}
 	\caption{Embedding vector comparision of strategy 1 network.}
 	% \vspace{-12pt}

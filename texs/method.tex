@@ -4,7 +4,7 @@
 
 We propose two strategies to improve code search performance based on the assumption that identity information will confuse the model when fine-tuning multiple language data. Instead of changing the structure and pre-training the whole code search model, we focus on transforming the model output embedding vectors during the fine-tuning process, which is less computing complexity. 
 
-The first strategy is leveraging GAN to eliminate identity information. The second strategy is to distance the KL divergence (CITE) between identity embedding and semantic embedding.
+The first strategy is leveraging GAN to eliminate identity information. The second strategy is to distance the KL divergence \cite{KL} between identity embedding and semantic embedding.
 
 \noindent\textbf{Identity and semantic information.} The identity information we consider as the syntax signal of different program languages, which distinguishes them from each other. We consider the identity information as the signal that the model can classify each program language data correctly. The semantic information is the intention of a code snippet, which describes the function of the code.
 
@@ -17,7 +17,7 @@ Then we describe the training procedure in this paper in detail.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=1\linewidth]{imgs/structure.png}
+	\includegraphics[width=1\linewidth]{imgs/structure.pdf}
 	% \vspace{-15pt}
 	\caption{Structure of the search enhancement framework.}
 	% \vspace{-12pt}
@@ -34,18 +34,45 @@ We also use another MLP as the discriminator.
 The object of the discriminator is to determine whether the vector generator produced 
 contains identity information. The structure of the network can be seen in Fig~\ref{fig:structure}.
 
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=1\linewidth]{imgs/gan_torch.png}
-	% \vspace{-15pt}
-	\caption{Pytorch style pseudocode of strategy 1}
-	% \vspace{-12pt}
-	\label{fig:gan}
-\end{figure}
+\begin{algorithm}[htb]
+	\caption{\textbf{Stragegy 1 training process}}
+	\label{Alg:st1Train}
+
+	\begin{lstlisting}[language=Python]
+for epoch_idx in total_epoch_num:
+	for step, batch in dataloader:
+		code_inputs, nl_inputs, labels = batch
+		code_vec, nl_vec = CodeBERT(code_inputs, nl_inputs)
+		search_embedding_vec = generator(code_vec)
+		if step < 2000:
+			train_search_model()
+		elif (step / 500) % 2 == 0 and step >= 2000:         
+			train_discriminator()
+		elif step >= 2000 and step / 500 % 2 != 0:
+			train_generator()
+	\end{lstlisting}
+
+\end{algorithm}
+
+We give the training process of strategy 1 in Algorithm~\ref{Alg:st1Train}. 
+First, we obtain the embedding vectors of code and natural language descriptions. 
+At the first 2,000 step of a epoch, we update the code search process, 
+with the object of minimizing the distance between code snippets and 
+their corresponding descriptions. Then, alternating update generator and 
+discriminator every 500 steps.
+
+% \begin{figure}[htb]
+% 	\centering
+% 	\includegraphics[width=1\linewidth]{imgs/gan_torch.png}
+% 	% \vspace{-15pt}
+% 	\caption{Pytorch style pseudocode of strategy 1}
+% 	% \vspace{-12pt}
+% 	\label{fig:gan}
+% \end{figure}
 
 \subsection{Strategy 2}
 Although GAN has a strong ability of learning and manipulating data distribution, 
-it is hard to be trained, and can easily suffer from gradient vanishing (CITE). 
+it is hard to be trained, and can easily suffer from gradient vanishing \cite{wGAN}. 
 Therefore, we propose an MLP-based network to disentangle identity and semantic 
 information. The overlook of the network can be seen in Fig~\ref{fig:st2}. 
 
@@ -63,7 +90,7 @@ used for code search.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=0.8\linewidth]{imgs/st2.png}
+	\includegraphics[width=0.8\linewidth]{imgs/st2.pdf}
 	% \vspace{-15pt}
 	\caption{Overlook of strategy 2}
 	% \vspace{-12pt}
@@ -95,4 +122,7 @@ L_{3} = \frac{1}{n}{\sum_{i = 1}^{n}\left( \alpha - KL\left( V_{1,i},V_{2,i} \ri
 \begin{equation}\label{eq_st2_4}
 \theta = {\min\limits_{\theta}{\alpha_{1}L_{1} +}}\alpha_{2}L_{2} + \alpha_{3}L_{3}
 \end{equation}
+
+
+
 
